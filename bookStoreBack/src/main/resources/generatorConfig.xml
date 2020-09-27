@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+                PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+                "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--<properties resource="config/jdbc.properties"></properties>-->
+<!--<properties resource="test-jdbc.properties"/>-->
+<!-- 数据库驱动 -->
+<classPathEntry location="E:\MYSQL\mysql-connector-java-5.1.44.jar" />
+<context id="DB2Tables" targetRuntime="MyBatis3">
+    <commentGenerator>
+        <property name="suppressDate" value="true" />
+        <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+        <property name="suppressAllComments" value="true" />
+    </commentGenerator>
+    <!--数据库链接URL，用户名、密码 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                    connectionURL="jdbc:mysql://localhost:3306/vue_bookstore?characterEncoding=utf-8" userId="root" password="123abc">
+    </jdbcConnection>
+    <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和
+        NUMERIC 类型解析为java.math.BigDecimal -->
+    <javaTypeResolver>
+        <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+    <!-- 生成模型的包名和位置 -->
+    <javaModelGenerator targetPackage="com.example.bookstore.pojo"
+                        targetProject="src/main/java">
+        <!-- enableSubPackages:是否让schema作为包的后缀 -->
+        <property name="enableSubPackages" value="true" />
+        <!-- 从数据库返回的值被清理前后的空格 -->
+        <property name="trimStrings" value="true" />
+    </javaModelGenerator>
+    <!-- 生成映射文件的包名和位置XML文件 -->
+    <sqlMapGenerator targetPackage="mapper"
+                     targetProject="src/main/resources">
+        <property name="enableSubPackages" value="true" />
+    </sqlMapGenerator>
+    <!-- 生成DAO的包名和位置 -->
+    <javaClientGenerator type="XMLMAPPER"
+                         targetPackage="com.example.bookstore.dao" targetProject="src/main/java">
+        <property name="enableSubPackages" value="true" />
+    </javaClientGenerator>
+    <!-- 要生成哪些表 -->
+    <!-- tableName:用于自动生成代码的数据库表；domainObjectName:对应于数据库表的javaBean类名 -->
+    <!--book_info数据库表明-->                  <!--别名Book_Info  model（实体类明）-->
+    <table tableName="user" domainObjectName="User"></table>
+    <table tableName="book" domainObjectName="Book"></table>
+    <table tableName="classified" domainObjectName="Classified"></table>
+    <table tableName="get_classified" domainObjectName="GetClassified"></table>
+    <table tableName="bookOrder" domainObjectName="BookOrder"></table>
+    <table tableName="contacts" domainObjectName="Contacts"></table>
+    <table tableName="item" domainObjectName="Item"></table>
+    <table tableName="shop_car" domainObjectName="ShopCar"></table>
+    <table tableName="comment" domainObjectName="Comment"></table>
+    <table tableName="collect" domainObjectName="Collect"></table>
+    <table tableName="morning_paper" domainObjectName="MorningPaper"></table>
+    <table tableName="chat" domainObjectName="Chat"></table>
+    <table tableName="business" domainObjectName="Business"></table>
+    <table tableName="coupon" domainObjectName="Coupon"></table>
+    <table tableName="get_coupon" domainObjectName="GetCoupon"></table>
+    <table tableName="message" domainObjectName="Message"></table>
+    <table tableName="topic" domainObjectName="Topic"></table>
+    <table tableName="all_order" domainObjectName="AllOrder"></table>
+    <table tableName="topic_book" domainObjectName="TopicBook"></table>
+</context>
+</generatorConfiguration>

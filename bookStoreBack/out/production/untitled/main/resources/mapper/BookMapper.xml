@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.bookstore.dao.BookMapper" >
+  <resultMap id="BaseResultMap" type="com.example.bookstore.pojo.Book" >
+    <id column="book_id" property="bookId" jdbcType="INTEGER" />
+    <result column="book_author" property="bookAuthor" jdbcType="VARCHAR" />
+    <result column="book_press" property="bookPress" jdbcType="VARCHAR" />
+    <result column="book_img" property="bookImg" jdbcType="VARCHAR" />
+    <result column="book_price" property="bookPrice" jdbcType="DOUBLE" />
+    <result column="book_time" property="bookTime" jdbcType="DATE" />
+    <result column="book_num" property="bookNum" jdbcType="INTEGER" />
+    <result column="book_intro" property="bookIntro" jdbcType="VARCHAR" />
+    <result column="book_name" property="bookName" jdbcType="VARCHAR" />
+    <result column="book_sale" property="bookSale" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    book_id, book_author, book_press, book_img, book_price, book_time, book_num, book_intro, 
+    book_name, book_sale
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.bookstore.pojo.BookExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where book_id = #{bookId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from book
+    where book_id = #{bookId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.bookstore.pojo.BookExample" >
+    delete from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.bookstore.pojo.Book" >
+    insert into book (book_id, book_author, book_press, 
+      book_img, book_price, book_time, 
+      book_num, book_intro, book_name, 
+      book_sale)
+    values (#{bookId,jdbcType=INTEGER}, #{bookAuthor,jdbcType=VARCHAR}, #{bookPress,jdbcType=VARCHAR}, 
+      #{bookImg,jdbcType=VARCHAR}, #{bookPrice,jdbcType=DOUBLE}, #{bookTime,jdbcType=DATE}, 
+      #{bookNum,jdbcType=INTEGER}, #{bookIntro,jdbcType=VARCHAR}, #{bookName,jdbcType=VARCHAR}, 
+      #{bookSale,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bookstore.pojo.Book" >
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="bookAuthor != null" >
+        book_author,
+      </if>
+      <if test="bookPress != null" >
+        book_press,
+      </if>
+      <if test="bookImg != null" >
+        book_img,
+      </if>
+      <if test="bookPrice != null" >
+        book_price,
+      </if>
+      <if test="bookTime != null" >
+        book_time,
+      </if>
+      <if test="bookNum != null" >
+        book_num,
+      </if>
+      <if test="bookIntro != null" >
+        book_intro,
+      </if>
+      <if test="bookName != null" >
+        book_name,
+      </if>
+      <if test="bookSale != null" >
+        book_sale,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bookId != null" >
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="bookAuthor != null" >
+        #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPress != null" >
+        #{bookPress,jdbcType=VARCHAR},
+      </if>
+      <if test="bookImg != null" >
+        #{bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPrice != null" >
+        #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="bookTime != null" >
+        #{bookTime,jdbcType=DATE},
+      </if>
+      <if test="bookNum != null" >
+        #{bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookIntro != null" >
+        #{bookIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null" >
+        #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookSale != null" >
+        #{bookSale,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.bookstore.pojo.BookExample" resultType="java.lang.Integer" >
+    select count(*) from book
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update book
+    <set >
+      <if test="record.bookId != null" >
+        book_id = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookAuthor != null" >
+        book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookPress != null" >
+        book_press = #{record.bookPress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookImg != null" >
+        book_img = #{record.bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookPrice != null" >
+        book_price = #{record.bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bookTime != null" >
+        book_time = #{record.bookTime,jdbcType=DATE},
+      </if>
+      <if test="record.bookNum != null" >
+        book_num = #{record.bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookIntro != null" >
+        book_intro = #{record.bookIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookName != null" >
+        book_name = #{record.bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bookSale != null" >
+        book_sale = #{record.bookSale,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update book
+    set book_id = #{record.bookId,jdbcType=INTEGER},
+      book_author = #{record.bookAuthor,jdbcType=VARCHAR},
+      book_press = #{record.bookPress,jdbcType=VARCHAR},
+      book_img = #{record.bookImg,jdbcType=VARCHAR},
+      book_price = #{record.bookPrice,jdbcType=DOUBLE},
+      book_time = #{record.bookTime,jdbcType=DATE},
+      book_num = #{record.bookNum,jdbcType=INTEGER},
+      book_intro = #{record.bookIntro,jdbcType=VARCHAR},
+      book_name = #{record.bookName,jdbcType=VARCHAR},
+      book_sale = #{record.bookSale,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bookstore.pojo.Book" >
+    update book
+    <set >
+      <if test="bookAuthor != null" >
+        book_author = #{bookAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPress != null" >
+        book_press = #{bookPress,jdbcType=VARCHAR},
+      </if>
+      <if test="bookImg != null" >
+        book_img = #{bookImg,jdbcType=VARCHAR},
+      </if>
+      <if test="bookPrice != null" >
+        book_price = #{bookPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="bookTime != null" >
+        book_time = #{bookTime,jdbcType=DATE},
+      </if>
+      <if test="bookNum != null" >
+        book_num = #{bookNum,jdbcType=INTEGER},
+      </if>
+      <if test="bookIntro != null" >
+        book_intro = #{bookIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="bookName != null" >
+        book_name = #{bookName,jdbcType=VARCHAR},
+      </if>
+      <if test="bookSale != null" >
+        book_sale = #{bookSale,jdbcType=INTEGER},
+      </if>
+    </set>
+    where book_id = #{bookId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bookstore.pojo.Book" >
+    update book
+    set book_author = #{bookAuthor,jdbcType=VARCHAR},
+      book_press = #{bookPress,jdbcType=VARCHAR},
+      book_img = #{bookImg,jdbcType=VARCHAR},
+      book_price = #{bookPrice,jdbcType=DOUBLE},
+      book_time = #{bookTime,jdbcType=DATE},
+      book_num = #{bookNum,jdbcType=INTEGER},
+      book_intro = #{bookIntro,jdbcType=VARCHAR},
+      book_name = #{bookName,jdbcType=VARCHAR},
+      book_sale = #{bookSale,jdbcType=INTEGER}
+    where book_id = #{bookId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.bookstore.dao.GetClassifiedMapper" >
+  <resultMap id="BaseResultMap" type="com.example.bookstore.pojo.GetClassified" >
+    <id column="get_classified_id" property="getClassifiedId" jdbcType="INTEGER" />
+    <result column="book_id" property="bookId" jdbcType="INTEGER" />
+    <result column="classified_id" property="classifiedId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    get_classified_id, book_id, classified_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.bookstore.pojo.GetClassifiedExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from get_classified
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from get_classified
+    where get_classified_id = #{getClassifiedId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from get_classified
+    where get_classified_id = #{getClassifiedId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.bookstore.pojo.GetClassifiedExample" >
+    delete from get_classified
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.bookstore.pojo.GetClassified" >
+    insert into get_classified (get_classified_id, book_id, classified_id
+      )
+    values (#{getClassifiedId,jdbcType=INTEGER}, #{bookId,jdbcType=INTEGER}, #{classifiedId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bookstore.pojo.GetClassified" >
+    insert into get_classified
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="getClassifiedId != null" >
+        get_classified_id,
+      </if>
+      <if test="bookId != null" >
+        book_id,
+      </if>
+      <if test="classifiedId != null" >
+        classified_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="getClassifiedId != null" >
+        #{getClassifiedId,jdbcType=INTEGER},
+      </if>
+      <if test="bookId != null" >
+        #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="classifiedId != null" >
+        #{classifiedId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.bookstore.pojo.GetClassifiedExample" resultType="java.lang.Integer" >
+    select count(*) from get_classified
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update get_classified
+    <set >
+      <if test="record.getClassifiedId != null" >
+        get_classified_id = #{record.getClassifiedId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bookId != null" >
+        book_id = #{record.bookId,jdbcType=INTEGER},
+      </if>
+      <if test="record.classifiedId != null" >
+        classified_id = #{record.classifiedId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update get_classified
+    set get_classified_id = #{record.getClassifiedId,jdbcType=INTEGER},
+      book_id = #{record.bookId,jdbcType=INTEGER},
+      classified_id = #{record.classifiedId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bookstore.pojo.GetClassified" >
+    update get_classified
+    <set >
+      <if test="bookId != null" >
+        book_id = #{bookId,jdbcType=INTEGER},
+      </if>
+      <if test="classifiedId != null" >
+        classified_id = #{classifiedId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where get_classified_id = #{getClassifiedId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bookstore.pojo.GetClassified" >
+    update get_classified
+    set book_id = #{bookId,jdbcType=INTEGER},
+      classified_id = #{classifiedId,jdbcType=INTEGER}
+    where get_classified_id = #{getClassifiedId,jdbcType=INTEGER}
+  </update>
+</mapper>

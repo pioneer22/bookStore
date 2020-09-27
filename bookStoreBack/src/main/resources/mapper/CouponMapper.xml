@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.bookstore.dao.CouponMapper" >
+  <resultMap id="BaseResultMap" type="com.example.bookstore.pojo.Coupon" >
+    <id column="coupon_id" property="couponId" jdbcType="INTEGER" />
+    <result column="coupon_img" property="couponImg" jdbcType="VARCHAR" />
+    <result column="coupon_use" property="couponUse" jdbcType="INTEGER" />
+    <result column="coupon_money" property="couponMoney" jdbcType="INTEGER" />
+    <result column="coupon_vaild" property="couponVaild" jdbcType="TIMESTAMP" />
+    <result column="coupon_time" property="couponTime" jdbcType="TIMESTAMP" />
+    <result column="coupon_num" property="couponNum" jdbcType="INTEGER" />
+    <result column="business_id" property="businessId" jdbcType="VARCHAR" />
+    <result column="coupon_getnum" property="couponGetnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    coupon_id, coupon_img, coupon_use, coupon_money, coupon_vaild, coupon_time, coupon_num, 
+    business_id, coupon_getnum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.bookstore.pojo.CouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from coupon
+    where coupon_id = #{couponId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from coupon
+    where coupon_id = #{couponId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.bookstore.pojo.CouponExample" >
+    delete from coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.bookstore.pojo.Coupon" >
+    insert into coupon (coupon_id, coupon_img, coupon_use, 
+      coupon_money, coupon_vaild, coupon_time, 
+      coupon_num, business_id, coupon_getnum
+      )
+    values (#{couponId,jdbcType=INTEGER}, #{couponImg,jdbcType=VARCHAR}, #{couponUse,jdbcType=INTEGER}, 
+      #{couponMoney,jdbcType=INTEGER}, #{couponVaild,jdbcType=TIMESTAMP}, #{couponTime,jdbcType=TIMESTAMP}, 
+      #{couponNum,jdbcType=INTEGER}, #{businessId,jdbcType=VARCHAR}, #{couponGetnum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bookstore.pojo.Coupon" >
+    insert into coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="couponId != null" >
+        coupon_id,
+      </if>
+      <if test="couponImg != null" >
+        coupon_img,
+      </if>
+      <if test="couponUse != null" >
+        coupon_use,
+      </if>
+      <if test="couponMoney != null" >
+        coupon_money,
+      </if>
+      <if test="couponVaild != null" >
+        coupon_vaild,
+      </if>
+      <if test="couponTime != null" >
+        coupon_time,
+      </if>
+      <if test="couponNum != null" >
+        coupon_num,
+      </if>
+      <if test="businessId != null" >
+        business_id,
+      </if>
+      <if test="couponGetnum != null" >
+        coupon_getnum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="couponId != null" >
+        #{couponId,jdbcType=INTEGER},
+      </if>
+      <if test="couponImg != null" >
+        #{couponImg,jdbcType=VARCHAR},
+      </if>
+      <if test="couponUse != null" >
+        #{couponUse,jdbcType=INTEGER},
+      </if>
+      <if test="couponMoney != null" >
+        #{couponMoney,jdbcType=INTEGER},
+      </if>
+      <if test="couponVaild != null" >
+        #{couponVaild,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponTime != null" >
+        #{couponTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponNum != null" >
+        #{couponNum,jdbcType=INTEGER},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponGetnum != null" >
+        #{couponGetnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.bookstore.pojo.CouponExample" resultType="java.lang.Integer" >
+    select count(*) from coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update coupon
+    <set >
+      <if test="record.couponId != null" >
+        coupon_id = #{record.couponId,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponImg != null" >
+        coupon_img = #{record.couponImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponUse != null" >
+        coupon_use = #{record.couponUse,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponMoney != null" >
+        coupon_money = #{record.couponMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponVaild != null" >
+        coupon_vaild = #{record.couponVaild,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponTime != null" >
+        coupon_time = #{record.couponTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.couponNum != null" >
+        coupon_num = #{record.couponNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessId != null" >
+        business_id = #{record.businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponGetnum != null" >
+        coupon_getnum = #{record.couponGetnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update coupon
+    set coupon_id = #{record.couponId,jdbcType=INTEGER},
+      coupon_img = #{record.couponImg,jdbcType=VARCHAR},
+      coupon_use = #{record.couponUse,jdbcType=INTEGER},
+      coupon_money = #{record.couponMoney,jdbcType=INTEGER},
+      coupon_vaild = #{record.couponVaild,jdbcType=TIMESTAMP},
+      coupon_time = #{record.couponTime,jdbcType=TIMESTAMP},
+      coupon_num = #{record.couponNum,jdbcType=INTEGER},
+      business_id = #{record.businessId,jdbcType=VARCHAR},
+      coupon_getnum = #{record.couponGetnum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bookstore.pojo.Coupon" >
+    update coupon
+    <set >
+      <if test="couponImg != null" >
+        coupon_img = #{couponImg,jdbcType=VARCHAR},
+      </if>
+      <if test="couponUse != null" >
+        coupon_use = #{couponUse,jdbcType=INTEGER},
+      </if>
+      <if test="couponMoney != null" >
+        coupon_money = #{couponMoney,jdbcType=INTEGER},
+      </if>
+      <if test="couponVaild != null" >
+        coupon_vaild = #{couponVaild,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponTime != null" >
+        coupon_time = #{couponTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="couponNum != null" >
+        coupon_num = #{couponNum,jdbcType=INTEGER},
+      </if>
+      <if test="businessId != null" >
+        business_id = #{businessId,jdbcType=VARCHAR},
+      </if>
+      <if test="couponGetnum != null" >
+        coupon_getnum = #{couponGetnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where coupon_id = #{couponId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bookstore.pojo.Coupon" >
+    update coupon
+    set coupon_img = #{couponImg,jdbcType=VARCHAR},
+      coupon_use = #{couponUse,jdbcType=INTEGER},
+      coupon_money = #{couponMoney,jdbcType=INTEGER},
+      coupon_vaild = #{couponVaild,jdbcType=TIMESTAMP},
+      coupon_time = #{couponTime,jdbcType=TIMESTAMP},
+      coupon_num = #{couponNum,jdbcType=INTEGER},
+      business_id = #{businessId,jdbcType=VARCHAR},
+      coupon_getnum = #{couponGetnum,jdbcType=INTEGER}
+    where coupon_id = #{couponId,jdbcType=INTEGER}
+  </update>
+</mapper>

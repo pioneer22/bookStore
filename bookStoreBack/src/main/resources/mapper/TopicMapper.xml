@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.bookstore.dao.TopicMapper" >
+  <resultMap id="BaseResultMap" type="com.example.bookstore.pojo.Topic" >
+    <id column="topic_id" property="topicId" jdbcType="INTEGER" />
+    <result column="topic_img" property="topicImg" jdbcType="VARCHAR" />
+    <result column="topic_time" property="topicTime" jdbcType="TIMESTAMP" />
+    <result column="topic_name" property="topicName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    topic_id, topic_img, topic_time, topic_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.bookstore.pojo.TopicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from topic
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.bookstore.pojo.TopicExample" >
+    delete from topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.bookstore.pojo.Topic" >
+    insert into topic (topic_id, topic_img, topic_time, 
+      topic_name)
+    values (#{topicId,jdbcType=INTEGER}, #{topicImg,jdbcType=VARCHAR}, #{topicTime,jdbcType=TIMESTAMP}, 
+      #{topicName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bookstore.pojo.Topic" >
+    insert into topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="topicId != null" >
+        topic_id,
+      </if>
+      <if test="topicImg != null" >
+        topic_img,
+      </if>
+      <if test="topicTime != null" >
+        topic_time,
+      </if>
+      <if test="topicName != null" >
+        topic_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="topicId != null" >
+        #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="topicImg != null" >
+        #{topicImg,jdbcType=VARCHAR},
+      </if>
+      <if test="topicTime != null" >
+        #{topicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="topicName != null" >
+        #{topicName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.bookstore.pojo.TopicExample" resultType="java.lang.Integer" >
+    select count(*) from topic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update topic
+    <set >
+      <if test="record.topicId != null" >
+        topic_id = #{record.topicId,jdbcType=INTEGER},
+      </if>
+      <if test="record.topicImg != null" >
+        topic_img = #{record.topicImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.topicTime != null" >
+        topic_time = #{record.topicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.topicName != null" >
+        topic_name = #{record.topicName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update topic
+    set topic_id = #{record.topicId,jdbcType=INTEGER},
+      topic_img = #{record.topicImg,jdbcType=VARCHAR},
+      topic_time = #{record.topicTime,jdbcType=TIMESTAMP},
+      topic_name = #{record.topicName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bookstore.pojo.Topic" >
+    update topic
+    <set >
+      <if test="topicImg != null" >
+        topic_img = #{topicImg,jdbcType=VARCHAR},
+      </if>
+      <if test="topicTime != null" >
+        topic_time = #{topicTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="topicName != null" >
+        topic_name = #{topicName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bookstore.pojo.Topic" >
+    update topic
+    set topic_img = #{topicImg,jdbcType=VARCHAR},
+      topic_time = #{topicTime,jdbcType=TIMESTAMP},
+      topic_name = #{topicName,jdbcType=VARCHAR}
+    where topic_id = #{topicId,jdbcType=INTEGER}
+  </update>
+</mapper>
